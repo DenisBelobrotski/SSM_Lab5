@@ -1,0 +1,62 @@
+\documentclass[12pt]{article}
+\usepackage[russian]{babel}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm, bindingoffset=0cm]
+{geometry}
+
+\begin{document}
+
+\textbf{Белоброцкий Денис 4 курс 5 группа}
+\\
+\begin{center}
+	{\Large Лабораторная работа №5}
+\end{center} 
+\begin{center}
+	{\large \textbf{Метод Монте-Карло для решения СЛАУ}}
+\end{center} 
+\begin{center}
+	Вариант 2
+\end{center}
+
+	\section*{Постановка задачи}
+	\par Решить СЛАУ вида $ Ax=f $ методом Монте-Карло. Сравнить полученное решение с точным.
+	\section*{Теория}
+	\par \textbf{Метод Монте-Карло для решения СЛАУ} 
+	\par Предположим, что все характеристические числа матрицы $ A $ удовлетворяют условию $ |\lambda| < 1 $. Если положить, что $ x^{(0)} = f $, то 
+	$$ x^{(k)} = (A^k + A^{k-1} + ... + A + I_n)f, k=1,2... $$
+	$$ \overline{x} = \lim\limits_{k\to \infty} x^{(k)} = \lim\limits_{k\to \infty} (I_n + A + ... + A^k)f = (I_n - A)^{-1}f $$
+	\par Рассмотрим задачу о вычислении скалярного произведения $ (h, \overline{x}) $, где $ h $ заданный вектор.
+	\par С исходной системой и вектором $ h $ мы будем связывать некоторую фиксированную цепь Маркова из множества цепей, определяемых парой $ {\pi, P} $:
+	$$ \pi = (\pi_1,...,\pi_n)^T, \pi_i \geq 0, \sum\limits_{i=1}^n \pi_i = 1 $$
+	$$ P = (p_{ij}), \sum\limits_{j=1}^n p_{ij} = 1, p_{ij} \geq 0, i, j, =\overline{1, n} $$
+	\par Для также выполняются условия:
+	$$ \pi_i > 0, если h_i \neq 0 $$
+	$$ p_{ij} > 0, если a_{ij} \neq 0 $$
+	\par Положим:
+	$$ 
+		g_i^{(0)} = 
+		\begin{cases}
+			\frac{h_i}{\pi_i}, \pi_i > 0 \\
+			0, \pi_i = 0
+		\end{cases}
+	$$
+	
+	$$
+		g_{ij}^{(k)} = 
+		\begin{cases}
+			\frac{a_{ij}}{p_{ij}}, p_{ij} > 0 \\
+			0, p_{ij} = 0 
+		\end{cases}	
+	$$
+	
+	\par Рассмотрим траектории цепи Маркова длины $ N > 0 $. Движущейся частице приписывается вес $ Q_k $, который изменяется при движении по траектории $ i_0\to i_1\to ...\to i_n$ следующим образом:
+	$$ Q_0 = g_{i_0}^{(0)} $$
+	$$ Q_m = Q_{m-1} g_{i_{m-1}, i_m}^{(m)}, m > 0 $$
+	\par Найдём случайную величину $ \xi_N $, определённую на траекториях Марковской цепи длины $ N $:
+	$$ \xi_N = \sum\limits_{m=0}^N Q_m f_{i_m} $$
+	\par Возьмём $ l > 0 $ цепей Маркова, тогда приближённое значение для $ x_j $ может быть найдено по формуле:
+	$$ x_j \approx \frac{1}{l} \sum\limits_{k=1}^l \xi_{e_j}^{(k)} $$
+	
+\end{document}
